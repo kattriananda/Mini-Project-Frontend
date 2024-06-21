@@ -29,13 +29,17 @@ const Cart = () => {
                         <div className="flex justify-between w-full ">
                             <h4>Price</h4>
                             <div>
-                                <button className="bg-orange-400 w-5">-</button>
+                                <button className="bg-green-950 text-white font-semibold w-5 hover:bg-green-900">
+                                    -
+                                </button>
                                 <input
                                     type="text"
                                     value={1}
                                     className="appearance-none w-10 text-center"
                                 />
-                                <button className="bg-orange-400 w-5">+</button>
+                                <button className="bg-green-950 text-white font-semibold w-5 hover:bg-green-900">
+                                    +
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -60,7 +64,9 @@ const Cart = () => {
                     <p className="">Total</p>
                     <p>1234</p>
                 </div>
-               <button className="w-full h-12 rounded-lg my-5  bg-orange-300 font-semibold">Payment</button>
+                <button className="w-full h-12 rounded-lg my-5  bg-green-950 text-white font-semibold hover:bg-green-900">
+                    Payment
+                </button>
             </div>
         </div>
     );
