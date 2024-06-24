@@ -15,29 +15,29 @@ const Home = () => {
         return res;
     };
     const { data: products, error: productError } = useSWR(
-        "/products",
+        "/listproduct",
         product
     );
     const { data: categories, error: categoryError } = useSWR(
-        "/categories",
+        "/getAll",
         category
     );
-    console.log(products);
-    console.log(categories);
+     console.log(products);
+     console.log(categories);
     // const fetcher = (url) => fetcher(url). then((res)=> res.json())
     // const {data, error} = useSWR ('http://localhost:3000/products', fetcher)
     // console.log(data);
     return (
         <div>
             <Sidebar />
-            <div className="absolute top-5 z-50">
+            <div className="absolute top-5">
                 <Header
                     title="Welcome!!"
                     desc=" Discover whatever you need easily"
                 />
             </div>
             {/* <div className=" "> */}
-                <div className=" fixed left-24 h-14 content-center top-[86px] z-50 bg-white">
+                <div className=" fixed left-24 h-14 content-center top-[86px] z-40 bg-white">
                     <div className="flex space-x-4 w-[80rem]">
                     {categories.map((category) => (
                         <button
@@ -53,9 +53,9 @@ const Home = () => {
             {/* </div> */}
 
             <div className="ml-14 mt-32 grid grid-cols-5 overflow-hidden">
-                {products.map((product) => (
+                 {products.map((product) => (
                     <ProductCard key={product.id} product={product} />
-                ))}
+                ))} 
             </div>
         </div>
     );

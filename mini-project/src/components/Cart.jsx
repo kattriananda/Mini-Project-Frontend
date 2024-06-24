@@ -1,9 +1,11 @@
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Cart = (props) => {
     const { className } = props;
+    const [quantity, setQuantity] = useState(1);
 
     return (
         <div
@@ -13,6 +15,7 @@ const Cart = (props) => {
                 <h2 className="font-semibold text-[22px] mt-4">
                     Current Order
                 </h2>
+                
             </div>
             <div className="Product h-[310px]">
                 <div className="flex space-x-4">
@@ -29,15 +32,16 @@ const Cart = (props) => {
                         <div className="flex justify-between w-full ">
                             <h4>Price</h4>
                             <div>
-                                <button className="bg-green-950 text-white font-semibold w-5 hover:bg-green-900">
+                                <button onClick={()=> setQuantity ((quantity) => Math.max(1, quantity -1))} className="bg-green-950 text-white font-semibold w-5 hover:bg-green-900">
                                     -
                                 </button>
                                 <input
                                     type="text"
-                                    value={1}
+                                    value={quantity}
+                                    readOnly
                                     className="appearance-none w-10 text-center"
                                 />
-                                <button className="bg-green-950 text-white font-semibold w-5 hover:bg-green-900">
+                                <button onClick={() => setQuantity ((quantity) => quantity +1)} className="bg-green-950 text-white font-semibold w-5 hover:bg-green-900">
                                     +
                                 </button>
                             </div>

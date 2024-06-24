@@ -3,6 +3,7 @@ import {
     faCartPlus,
     faCartShopping,
     faFilter,
+    faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
@@ -15,14 +16,13 @@ const Header = (props) => {
         setShowCart(!showCart);
     };
     return (
-        <header className="fixed w-[74rem] top-0 overflow-hidden ml-14 pt-4 bg-white">
+        <header className="fixed w-[74rem] top-0 overflow-hidden ml-14 pt-4 bg-white z-50">
             <div className="flex justify-between">
                 <div className="">
                     <h1 className="text-left font-bold text-[32px]">
                        {title}
                     </h1>
                     <p className="text-slate-600">
-                      
                         {desc}
                     </p>
                 </div>
@@ -36,7 +36,7 @@ const Header = (props) => {
                     </div>
                     <div
                         className={`filter text-lg ${
-                            showCart ? "-translate-x-[335px]" : ""
+                            showCart ? "-translate-x-[340px]" : ""
                         }`}
                     >
                         <button>
@@ -46,21 +46,16 @@ const Header = (props) => {
                     <div className="filter text-lg">
                         <button
                             onClick={toggleCart}
-                            className={`${
-                                showCart ? (
-                                    <FontAwesomeIcon icon={faCartShopping} className="z-50" />
-                                )  : (
-                                    ""
-                                )
-                            }`}
                         >
-                            <FontAwesomeIcon icon={faCartShopping} />
+                            {showCart ? (<FontAwesomeIcon icon={faX} className="-translate-x-[370px]"/>) : <FontAwesomeIcon icon={faCartShopping} />}
+                            
                         </button>
                     </div>
                 </div>
                 <Cart
-                    className={`${showCart ? " right-0 z-[999]" : "right-[-100%]"} `}
+                    className={`${showCart ? " right-0" : "right-[-100%]"} `}
                 />
+                
             </div>
         </header>
     );
