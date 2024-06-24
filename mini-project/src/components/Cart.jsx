@@ -1,18 +1,18 @@
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 
-const Cart = () => {
+const Cart = (props) => {
+    const { className } = props;
+
     return (
-        <div className="fixed right-0 top-0 h-full w-96 shadow p-6">
-            <div className="h-16 flex justify-between items-start">
-                <h2 className="font-semibold text-[22px]">Current Order</h2>
-                <button className="">
-                    <FontAwesomeIcon
-                        icon={faCartShopping}
-                        className="text-xl"
-                    />
-                </button>
+        <div
+            className={`${className} fixed top-0 h-full w-96 shadow p-6 bg-white `}
+        >
+            <div className="h-20 flex justify-between items-start">
+                <h2 className="font-semibold text-[22px] mt-4">
+                    Current Order
+                </h2>
             </div>
             <div className="Product h-[310px]">
                 <div className="flex space-x-4">
@@ -64,9 +64,11 @@ const Cart = () => {
                     <p className="">Total</p>
                     <p>1234</p>
                 </div>
-                <button className="w-full h-12 rounded-lg my-5  bg-green-950 text-white font-semibold hover:bg-green-900">
-                    Payment
-                </button>
+                <Link to="/checkout">
+                    <button className="w-full h-12 rounded-lg my-5  bg-green-950 text-white font-semibold hover:bg-green-900">
+                        Payment
+                    </button>
+                </Link>
             </div>
         </div>
     );
