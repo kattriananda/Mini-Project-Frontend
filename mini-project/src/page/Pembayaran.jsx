@@ -1,19 +1,58 @@
 import React, { useState } from "react";
 import Sidebar from "../layout/Sidebar";
 import Header from "../layout/Header";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { clearCart } from "../store/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const Pembayaran = () => {
     const items = useSelector((state) => state.cart.items);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [payment, setPayment] = useState(0);
+    const [showPopup, setPopup] = useState(false);
+
     const handlePayment = (e) => {
-        setPayment(Number(e.target.value))
-    }
+        setPayment(Number(e.target.value));
+    };
+
+    const handleTransaction = async () => {
+        const transactionDetails = items.map((item) => ({
+            productId: item.id,
+            quantity: item.quantity,
+            subtotal: item.price * item.quantity,
+        }));
+        const totalAmount = transactionDetails.reduce(
+            (total, item) => total + item.subtotal,
+            0
+        );
+
+        const data = {
+            totalAmount,
+            totalPay: payment,
+            transactionDetails,
+        };
+        try {
+            await axios.post("http://localhost:8080/pos/api/addtransaction", data);
+
+            setPopup(true);
+            dispatch(clearCart());
+            setTimeout(() => {
+                setPopup(false);
+                navigate("/listproduct");
+            }, 3000);
+        } catch (error) {
+            console.error("Gagal mengirim data ke api", error);
+        }
+    };
+
     const total = items.reduce(
         (total, item) => total + item.price * item.quantity,
         0
     );
-    const change = payment- total
+    const change = payment - total;
 
     return (
         <>
@@ -33,7 +72,9 @@ const Pembayaran = () => {
                                 <div className="desc w-[43rem] flex justify-between ">
                                     <div className="text-left space-y-2">
                                         <p>{item.title}</p>
-                                        <p className="font-semibold">{item.price}</p>
+                                        <p className="font-semibold">
+                                            {item.price}
+                                        </p>
                                     </div>
                                     <div>X {item.quantity}</div>
                                     <div className="font-semibold text-right">
@@ -52,19 +93,49 @@ const Pembayaran = () => {
                     </div>
                     <div className="font-medium text-[20px] space-y-2">
                         <p>Dibayar</p>
-                        <input type="number" className="border w-full" value={payment} onChange={handlePayment} />
+                        <input
+                            type="number"
+                            className="border w-full"
+                            value={payment}
+                            onChange={handlePayment}
+                        />
                     </div>
                     <div className="font-medium flex justify-between text-[20px]">
                         <p>Kembalian</p>
                         <p>Rp.{change > 0 ? change : 0}</p>
                     </div>
                     <div className="">
-                        <button className="w-full rounded-lg border py-2 bg-green-950 text-white">
+                        <button
+                            className={`w-full rounded-lg border py-2  text-white ${
+                                payment >= total
+                                    ? "bg-green-950"
+                                    : "bg-gray-400 cursor-not-allowed"
+                            }`}
+                            disabled={payment < total}
+                            onClick={handleTransaction}
+                        >
                             Selesai
                         </button>
                     </div>
                     {/* </div> */}
                 </div>
+                 {showPopup && (
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-6 rounded shadow-lg">
+                        <p className="text-xl font-semibold mb-4">Pembayaran Sukses!</p>
+                        <p className="mb-4">Anda akan diarahkan kembali ke halaman daftar produk.</p>
+                        <button 
+                            className="w-full rounded-lg border py-2 bg-green-950 text-white"
+                            onClick={() => {
+                                setPopup(false);
+                                navigate('/listproduct'); // Sesuaikan path sesuai dengan rute daftar produk Anda
+                            }}
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
             </div>
         </>
     );
