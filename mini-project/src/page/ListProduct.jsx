@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../layout/Sidebar";
 import Header from "../layout/Header";
 import ProductCard from "../components/ProductCard";
@@ -31,10 +31,11 @@ const ListProduct = () => {
     //  console.log(products);
     //  console.log(categories);
 
-    // const handleCategory = (category) => {
-    //     setSelectedCategory(category.name);
-    //     console.log(selectedCategory);
-    // }
+
+    const handleCategory = (categoryId) => {
+        setSelectedCategory(prevCategory => prevCategory === categoryId? '' : categoryId)
+        // console.log(selectedCategory);
+    }
 
    
 
@@ -52,8 +53,8 @@ const ListProduct = () => {
                     {categories && categories.map((category) => (
                         <button
                             key={category.id}
-                            className={`border rounded-full px-4 py-1 ${selectedCategory === category.name ? 'bg-gray-200':''}`}
-                            onClick = {()=> setSelectedCategory(category.name)}
+                            className={`border rounded-full px-4 py-1 ${selectedCategory === category.id ? 'bg-gray-200':''}`}
+                            onClick = {()=> handleCategory(category.id)}
                         >
                             {category.name}
                         </button>

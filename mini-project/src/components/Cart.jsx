@@ -1,4 +1,4 @@
-import { faCartShopping, faX } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,6 +52,11 @@ const Cart = () => {
                             >
                                 <div className="img h-20 w-20 bg-slate-300 rounded-xl mt-2">
                                     <img src={item.image} alt={item.title} />
+                                </div>
+                                <div className="absolute top-28 right-5 ">
+                                    <button className=" text-black border hover:bg-red-600 hover:text-white rounded-full px-[12px] pb-1 " onClick={()=>handleRemove(item.id)}>
+                                    <FontAwesomeIcon icon={faTrash} className="text-[12px]"/>
+                                    </button>
                                 </div>
                                 <div className="desc flex-col w-52 space-y-4 ">
                                     <div className="name text-[18px] font-medium">
