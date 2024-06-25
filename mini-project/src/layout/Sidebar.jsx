@@ -26,7 +26,7 @@ const Sidebar = () => {
             <div className="menu flex-col h-3/4 py-4 space-y-7 ">
                 <div>
                     <Link to="/">
-                        <button>
+                        <button className="focus:text-slate-600">
                             <FontAwesomeIcon icon={faHouse} />
                         </button>
                     </Link>

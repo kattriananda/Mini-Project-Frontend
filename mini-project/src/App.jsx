@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import './App.css'
-import Cart from './components/Cart'
-import Sidebar from './layout/Sidebar'
-import Header from './layout/Header'
 import Home from './page/Home'
 import Pembayaran from './page/Pembayaran'
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import ListProduct from './page/ListProduct'
+import ProductCrud from './page/ProductCrud'
+import Transaksi from './page/Transaksi'
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -18,6 +17,8 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/listproduct' element={<ListProduct/>}/>
         <Route path='/checkout' element={<Pembayaran/>}/>
+        <Route path='/product' element={<ProductCrud/>}/>
+        <Route path='/transaksi' element={<Transaksi/>}/>
       </Routes>
     </Router>
       {/* <Home/> */}

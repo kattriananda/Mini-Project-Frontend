@@ -1,8 +1,22 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addItem } from "../store/cartSlice";
 
 const ProductCard = ({product}) => {
+    const dispatch = useDispatch();
+const quantity = 1;
+
+const handleAddtoCart = () => {
+    dispatch(
+        addItem({
+            ...product,
+            quantity,
+        })
+    );
+    console.log("sukses");
+};
     return (
-        <div className="max-w-sm relative  w-60 p-2.5 mb-10 bg-white rounded overflow-hidden transition-all">
+        <div className="max-w-sm relative w-48 p-2.5 mb-10 rounded overflow-hidden transition-all cursor-pointer" onClick={handleAddtoCart}>
             <div className="bg-slate-100 h-40 object-contain rounded-xl">
                 {/* <img src={import.meta.env.BASE_URL + product.image} alt={product.name} /> */}
             </div>
