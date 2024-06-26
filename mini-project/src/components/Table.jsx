@@ -34,7 +34,9 @@ const Table = ({ columns, apiEndpoint, itemPath, deleteItem, actions }) => {
                                 {col.label}
                             </th>
                         ))}
-                        {actions && <th className="py-2 px-4 border">Action</th> }
+                        {actions && (
+                            <th className="py-2 px-4 border">Action</th>
+                        )}
                     </tr>
                 </thead>
                 <tbody>
@@ -47,26 +49,41 @@ const Table = ({ columns, apiEndpoint, itemPath, deleteItem, actions }) => {
                                         : item[col.key]}
                                 </td>
                             ))}
-                            {actions && (<td className="py-2 px-4 border">
-                                { actions.includes("detail")  &&(<button
-                                    onClick={() => handleDetail(item.id)}
-                                    className="px-2 py-1 bg-green-900 text-white mr-2"
-                                >
-                                    Detail
-                                </button>)}
-                                {actions.includes("edit") &&(<button
-                                    onClick={() => handleEdit(item.id)}
-                                    className="px-2 py-1 bg-green-900 text-white mr-2"
-                                >
-                                    Edit
-                                </button>)}
-                                { actions.includes("delete")  &&(<button
-                                    onClick={() => handleDelete(item.id)}
-                                    className="px-2 py-1 bg-green-900 text-white mr-2"
-                                >
-                                    Delete
-                                </button>)}
-                            </td>)}
+                            {actions && (
+                                <td className="py-2 px-4 border">
+                                    {actions.includes("detail") && (
+                                        <Link to={`${itemPath}/detail/${item.id}`}>
+                                            <button
+                                                // onClick={() =>
+                                                //     handleDetail(item.id)
+                                                // }
+                                                className="px-2 py-1 bg-green-900 text-white mr-2"
+                                            >
+                                                Detail
+                                            </button>
+                                        </Link>
+                                    )}
+
+                                    {actions.includes("edit") && (
+                                        <button
+                                            onClick={() => handleEdit(item.id)}
+                                            className="px-2 py-1 bg-green-900 text-white mr-2"
+                                        >
+                                            Edit
+                                        </button>
+                                    )}
+                                    {actions.includes("delete") && (
+                                        <button
+                                            onClick={() =>
+                                                handleDelete(item.id)
+                                            }
+                                            className="px-2 py-1 bg-green-900 text-white mr-2"
+                                        >
+                                            Delete
+                                        </button>
+                                    )}
+                                </td>
+                            )}
                         </tr>
                     ))}
                 </tbody>

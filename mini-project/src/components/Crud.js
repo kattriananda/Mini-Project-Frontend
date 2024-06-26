@@ -12,6 +12,10 @@ export const getProduct = async (search='', categoryId = '') => {
     const response = await api.get(url);
     return response.data;
 }
+export const getProductById = async (id) => {
+    const response = await api.get (`/detailproduct/${id}`);
+    return response.data;
+}
 export const getCategories = async () => {
     const response = await api.get("/getAll");
     return response.data;
