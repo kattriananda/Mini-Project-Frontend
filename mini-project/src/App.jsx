@@ -7,8 +7,9 @@ import ListProduct from "./page/ListProduct";
 import ProductCrud from "./page/ProductCrud";
 import Transaksi from "./page/Transaksi";
 import CategoryCrud from "./page/CategoryCrud";
-import TransactionDetail from "./page/TransactionDetail";
+import TransactionDetail from "./components/TransactionDetail";
 import ProductForm from "./components/ProductForm";
+import ProductDetail from "./components/ProductDetail";
 
 function App() {
     // const [count, setCount] = useState(0)
@@ -24,8 +25,10 @@ function App() {
                     <Route path="/transaksi" element={<Transaksi />} />
                     <Route path="transaksi/detail/:transactionId" element={<TransactionDetail />} />
                     <Route path="/category" element={<CategoryCrud />} />
-                    <Route path="/form/add" element={<ProductForm />} />
-                    <Route path="/form/edit/:id" element={<ProductForm />} />
+                    <Route path="/product/add" element={<ProductForm />} />
+                    <Route path="/product/edit/:id" element={<ProductForm />} />
+                    <Route path="/product/detail/:id" element={<ProductDetail />} />
+                    
 
                 </Routes>
             </Router>

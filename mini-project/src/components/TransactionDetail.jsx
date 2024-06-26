@@ -26,7 +26,7 @@ const TransactionDetail = () => {
     return (
         <>
             <Sidebar />
-            <Header title="Detail Transaksi" className="w-full" />
+            <Header title="Detail Transaksi"/>
             <div className="ml-14 mt-20">
                 {transaksi.length === 0 ? (
                     <div>No transaction Data</div>
