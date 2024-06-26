@@ -13,8 +13,16 @@ const Table = ({ columns, apiEndpoint, itemPath, deleteItem, actions }) => {
     const navigate = useNavigate;
 
     const handleDelete = async (id) => {
-        await deleteItem(id);
-        mutate();
+        try {
+            const response = await deleteItem(id);
+            if (response.canDelete) {
+                mutate();
+            } else {
+                alert("Product tidak bisa di hapus");
+            }
+        } catch (error) {
+            console.error("error delete: ", error);
+        }
     };
     const handleEdit = (id) => {
         navigate(`${itemPath}/edit/${id}`);
@@ -52,7 +60,9 @@ const Table = ({ columns, apiEndpoint, itemPath, deleteItem, actions }) => {
                             {actions && (
                                 <td className="py-2 px-4 border">
                                     {actions.includes("detail") && (
-                                        <Link to={`${itemPath}/detail/${item.id}`}>
+                                        <Link
+                                            to={`${itemPath}/detail/${item.id}`}
+                                        >
                                             <button
                                                 // onClick={() =>
                                                 //     handleDetail(item.id)

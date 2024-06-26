@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { getCategories } from "./Crud";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { addProduct, getCategories, getProductById, updateProduct } from "./Crud";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import useSWR, { mutate } from "swr";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ValidationShema = Yup.object().shape({
     title: Yup.string().required("Name is Required"),
@@ -10,52 +12,60 @@ const ValidationShema = Yup.object().shape({
         .required("Price is Required")
         .positive("Price must be positive"),
     image: Yup.string().required("Image is required"),
-    categoryId: Yup.array().of(
-        Yup.object().shape({
-            categoryId:Yup.string().required("Category is required")
-        })
-    ),
+    categoryId:Yup.number().required("Category is required")
 });
 
-const ProductForm = ({ onSubmit, productId }) => {
-    const category = async () => {
-        const res = await getCategories();
-        return res;
-    };
+
+const getCategory = () => getCategories();
+
+const ProductForm = () => {
+    const {id}= useParams();
+    const navigate = useNavigate();
+
     const { data: categories, error: categoryError } = useSWR(
         "/getAll",
-        category
+        getCategory
     );
-    // const {data: product, error: productError} = useSWR(productId ? `/products/${productId}` )
     const {
         register,
         handleSubmit,
-        control,
-        setValue,
         formState: { errors },
         reset
     } = useForm({ resolver: yupResolver(ValidationShema) });
 
-    // useEffect(()=>{
-    //     if (product) {
-    //         reset({
-    //             title:product.title,
-    //             price:product.price,
-    //             categoryId:product.categoryId
-    //         })
-    //     }
-    // },[product, reset])
-    // const {field, append, remove}= useFieldArray({
-    //     control,
-    //     name: "color",
-    // })
-
-    if (categoryError) return <div>Failed to load category</div>;
+    useEffect(()=>{
+        if (id) {
+            getProductById(id).then((product) => {
+                 console.log(product)
+                reset(...product)
+            })
+        }
+    },[id])
+    
+    const onSubmit = async (data) => {
+        data.price = Number(data.price);
+        data.categoryId = Number(data.categoryId);
+        console.log("Data:", data);
+        try {
+            if (id){
+                await updateProduct(id, data);
+            } else{
+                await addProduct(data)
+            }
+            mutate('getAll');
+            navigate('/product')
+        }catch (error) {
+            console.error("Error submitting form : ", error)
+        }
+        //  console.log("Form Data:", data); 
+    };
+    if (categoryError ) return <div>Failed to load data</div>;
     if (!categories) return <div>Loading...</div>;
 
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
+            
             className="max-w-md mx-auto mt-14 p-5 border rounded shadow"
         >
             <div className="mb-4">
@@ -99,30 +109,28 @@ const ProductForm = ({ onSubmit, productId }) => {
             </div>
             <div className="mb-4">
                 <label htmlFor="">Category</label>
-                <Controller
-                    name="categoryId"
-                    control={control}
-                    render={({ field }) => (
                         <select
-                            {...field}
+                            {...register('categoryId')}
                             className="w-full px-3 py-2 border rounded"
                         >
-                            <option value="">Selected Category</option>
+                            <option value="">Select Category</option>
                             {categories.map((category) => (
                                 <option key={category.id} value={category.id}>
                                     {category.name}
                                 </option>
                             ))}
                         </select>
-                    )}
-                />
+                    
                 {errors.categoryId && (
                     <p className="text-red-500 text-sm">
                         {errors.categoryId.message}
                     </p>
                 )}
             </div>
-            <button>{productId ? "update product" : "add Product"}</button>
+            <button type="submit">{id ? "update product" : "add Product"}</button>
+            <button onClick={()=> navigate("/product")}>Cancel</button>
         </form>
     );
 };
+
+export default ProductForm
