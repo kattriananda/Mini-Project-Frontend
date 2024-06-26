@@ -13,7 +13,7 @@ const handleAddtoCart = () => {
             quantity,
         })
     );
-    console.log("sukses");
+    // console.log("sukses");
 };
     return (
         <div className="max-w-sm relative w-48 p-2.5 mb-10 rounded overflow-hidden transition-all cursor-pointer" onClick={handleAddtoCart}>
@@ -23,7 +23,7 @@ const handleAddtoCart = () => {
             <div className="px-2 pt-2">
                 <p className="text-left font-bold text-[16px]">{product.title}</p>
                 <p className="text-left">{product.description}</p>
-                <p className="text-left font-bold text-[16px]">Rp.{product.price}</p>
+                <p className="text-left font-bold text-[16px]">Rp.{product.price.toLocaleString()}</p>
             </div>
         </div>
     )

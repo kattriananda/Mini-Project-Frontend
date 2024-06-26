@@ -7,19 +7,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import Cart from "../components/Cart";
-import axios from "axios";
-import useSWR from "swr";
 
 const Header = (props) => {
     const {title, desc, search, onSearchChange} = props;
-    // const[search, setSearch] = useState(''); 
-    // const fetcher = (url) => axios.get(url).then(res => res.data) 
-    // const{products, error} = useSWR(search ? `http://localhost:8080/pos/api/listproduct?title=${search}`: '', fetcher)
-
-    // if (error) return <div>Error loading products</div>
     return (
-        <header className="fixed w-[50rem]  top-0 overflow-hidden ml-14 pt-4 bg-white z-50">
+        <header className="fixed w-full top-0 overflow-hidden ml-12 pt-4 pb-8 bg-white z-50">
             <div className="flex justify-between">
                 <div className="">
                     <h1 className="text-left font-bold text-[32px]">
@@ -29,7 +21,7 @@ const Header = (props) => {
                         {desc}
                     </p>
                 </div>
-                <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-6 mr-28">
                     <div className="">
                         <input
                             type="text"

@@ -7,6 +7,7 @@ import ListProduct from "./page/ListProduct";
 import ProductCrud from "./page/ProductCrud";
 import Transaksi from "./page/Transaksi";
 import CategoryCrud from "./page/CategoryCrud";
+import TransactionDetail from "./page/TransactionDetail";
 
 function App() {
     // const [count, setCount] = useState(0)
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/checkout" element={<Pembayaran />} />
                     <Route path="/product" element={<ProductCrud />} />
                     <Route path="/transaksi" element={<Transaksi />} />
+                    <Route path="transaksi/detail/:transactionId" element={<TransactionDetail />} />
                     <Route path="/category" element={<CategoryCrud />} />
                 </Routes>
             </Router>

@@ -1,4 +1,8 @@
-import { faCartShopping, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
+import {
+    faCartShopping,
+    faTrash,
+    faX,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,45 +52,55 @@ const Cart = () => {
                         {items.map((item) => (
                             <div
                                 key={`${item.id}`}
-                                className="flex space-x-4 pb-2 items-center border-b-2 "
+                                className="flex space-x-4 pb-2 items-center border-b-2"
                             >
                                 <div className="img h-20 w-20 bg-slate-300 rounded-xl mt-2">
                                     <img src={item.image} alt={item.title} />
                                 </div>
-                                <div className="absolute top-28 right-5 ">
-                                    <button className=" text-black border hover:bg-red-600 hover:text-white rounded-full px-[12px] pb-1 " onClick={()=>handleRemove(item.id)}>
-                                    <FontAwesomeIcon icon={faTrash} className="text-[12px]"/>
-                                    </button>
-                                </div>
-                                <div className="desc flex-col w-52 space-y-4 ">
+                                <div className="desc flex-col w-[14.5rem] space-y-4 ">
                                     <div className="name text-[18px] font-medium">
                                         <h4>{item.title}</h4>
                                     </div>
-                                    <div className="flex justify-between w-full ">
-                                        <h4>{item.price}</h4>
-                                        <div>
+                                    <div className="flex justify-between w-full">
+                                        <h4>
+                                            Rp. {item.price.toLocaleString()}
+                                        </h4>
+                                        <div className="flex items-center space-x-2">
+                                            <div>
+                                                <button
+                                                    onClick={() =>
+                                                        handleDecrement(item.id)
+                                                    }
+                                                    className="bg-green-950 text-white font-semibold w-5 hover:bg-green-900"
+                                                >
+                                                    -
+                                                </button>
+                                                <input
+                                                    type="text"
+                                                    value={item.quantity}
+                                                    min="1"
+                                                    readOnly
+                                                    className="appearance-none w-10 text-center"
+                                                />
+                                                <button
+                                                    onClick={() =>
+                                                        handleIncrement(item.id)
+                                                    }
+                                                    className="bg-green-950 text-white font-semibold w-5 hover:bg-green-900"
+                                                >
+                                                    +
+                                                </button>
+                                            </div>
                                             <button
+                                                className=" text-black border hover:bg-red-600 hover:text-white rounded-full px-[9px] pb-1 "
                                                 onClick={() =>
-                                                    handleDecrement(item.id)
+                                                    handleRemove(item.id)
                                                 }
-                                                className="bg-green-950 text-white font-semibold w-5 hover:bg-green-900"
                                             >
-                                                -
-                                            </button>
-                                            <input
-                                                type="text"
-                                                value={item.quantity}
-                                                min="1"
-                                                readOnly
-                                                className="appearance-none w-10 text-center"
-                                            />
-                                            <button
-                                                onClick={() =>
-                                                    handleIncrement(item.id)
-                                                }
-                                                className="bg-green-950 text-white font-semibold w-5 hover:bg-green-900"
-                                            >
-                                                +
+                                                <FontAwesomeIcon
+                                                    icon={faTrash}
+                                                    className="text-[10px]"
+                                                />
                                             </button>
                                         </div>
                                     </div>
@@ -100,7 +114,7 @@ const Cart = () => {
                 <div className="p-5 bg-slate-100 rounded-2xl ">
                     <div className="flex justify-between">
                         <p>Subtotal</p>
-                        <p>Rp. {subtotal.toFixed(2)}</p>
+                        <p>Rp. {subtotal.toLocaleString()}</p>
                     </div>
                     <div className="flex justify-between">
                         <p>Discount</p>
@@ -108,12 +122,12 @@ const Cart = () => {
                     </div>
                     <div className="flex justify-between">
                         <p>Tax</p>
-                        <p>Rp. {tax}</p>
+                        <p>Rp. {tax.toLocaleString()}</p>
                     </div>
                 </div>
                 <div className="flex justify-between bg-slate-100 rounded-2xl p-5 font-medium text-[18px]">
                     <p className="">Total</p>
-                    <p>Rp.{total.toFixed(2)}</p>
+                    <p>Rp.{total.toLocaleString()}</p>
                 </div>
                 <Link to="/checkout">
                     <button className="w-full h-12 rounded-lg my-5  bg-green-950 text-white font-semibold hover:bg-green-900">
