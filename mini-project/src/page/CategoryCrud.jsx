@@ -7,7 +7,7 @@ import Header from "../layout/Header";
 const categoryColumns = [
     {key:"id", label:"ID"},
     {key:"name", label:"Name"},
-    {key:"product", label:"Jumlah Product Terkait"},
+    {key:"productCount", label:"Jumlah Product Terkait"},
 ]
 
 const CategoryCrud = () => {
@@ -19,7 +19,7 @@ const CategoryCrud = () => {
                 />
         <Table 
         columns = {categoryColumns} 
-        apiEndpoint = "http://localhost:8080/pos/api/getAll"
+        apiEndpoint = "http://localhost:8080/pos/api/categories"
         itemPath ="/category"
         deleteItem= {deleteProduct}
         actions={["detail", "edit", "delete"]}/>

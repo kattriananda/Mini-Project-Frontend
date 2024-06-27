@@ -11,7 +11,7 @@ import React, { useState } from "react";
 const Header = (props) => {
     const {title, desc, search, onSearchChange} = props;
     return (
-        <header className="fixed w-full top-0 overflow-hidden ml-12 pt-4 pb-8 bg-white z-50">
+        <header className="fixed w-full top-0 overflow-hidden ml-12 pt-4 pb-8 bg-white ">
             <div className="flex justify-between">
                 <div className="">
                     <h1 className="text-left font-bold text-[32px]">

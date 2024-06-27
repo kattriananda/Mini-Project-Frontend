@@ -17,8 +17,8 @@ const handleAddtoCart = () => {
 };
     return (
         <div className="max-w-sm relative w-48 p-2.5 mb-10 rounded overflow-hidden transition-all cursor-pointer" onClick={handleAddtoCart}>
-            <div className="bg-slate-100 h-40 object-contain rounded-xl">
-                {/* <img src={import.meta.env.BASE_URL + product.image} alt={product.name} /> */}
+            <div className="bg-slate-100 h-40 object-contain rounded-xl overflow-hidden">
+                <img src={product.image} alt="" className="" /> 
             </div>
             <div className="px-2 pt-2">
                 <p className="text-left font-bold text-[16px]">{product.title}</p>

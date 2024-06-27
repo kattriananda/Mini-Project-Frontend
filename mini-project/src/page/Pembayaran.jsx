@@ -63,7 +63,9 @@ const Pembayaran = () => {
                     <div className="flex-col space-4 space-y-5">
                         {items.map((item) => (
                             <div className="flex border-b-2 pb-2 items-center mr-4 space-x-2">
-                                <div className="img h-20 w-20 rounded-xl bg-slate-300"></div>
+                                <div className="img h-20 w-20 rounded-xl bg-slate-300">
+                                    <img src={item.image} alt="" className="" />
+                                </div>
                                 <div className="desc w-[43rem] grid grid-cols-3 ">
                                     <div className="text-left space-y-2 ">
                                         <p>{item.title}</p>

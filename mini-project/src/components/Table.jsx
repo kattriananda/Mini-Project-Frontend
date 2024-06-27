@@ -15,6 +15,7 @@ const Table = ({ columns, apiEndpoint, itemPath, deleteItem, actions }) => {
     const handleDelete = async (id) => {
         try {
             const response = await deleteItem(id);
+            // const data = await response.json();
             if (response.canDelete) {
                 mutate();
             } else {
@@ -27,9 +28,7 @@ const Table = ({ columns, apiEndpoint, itemPath, deleteItem, actions }) => {
     const handleEdit = (id) => {
         navigate(`${itemPath}/edit/${id}`);
     };
-    const handleDetail = (id) => {
-        navigate(`${itemPath}/detail/${id}`);
-    };
+   
     if (isLoading) return <div>Loding...</div>;
     if (isError) return <div>Error loading data</div>;
     return (
@@ -64,9 +63,6 @@ const Table = ({ columns, apiEndpoint, itemPath, deleteItem, actions }) => {
                                             to={`${itemPath}/detail/${item.id}`}
                                         >
                                             <button
-                                                // onClick={() =>
-                                                //     handleDetail(item.id)
-                                                // }
                                                 className="px-2 py-1 bg-green-900 text-white mr-2"
                                             >
                                                 Detail
@@ -75,12 +71,16 @@ const Table = ({ columns, apiEndpoint, itemPath, deleteItem, actions }) => {
                                     )}
 
                                     {actions.includes("edit") && (
+                                        <Link
+                                        to={`${itemPath}/edit/${item.id}`}
+                                    >
                                         <button
                                             onClick={() => handleEdit(item.id)}
                                             className="px-2 py-1 bg-green-900 text-white mr-2"
                                         >
                                             Edit
                                         </button>
+                                        </Link>
                                     )}
                                     {actions.includes("delete") && (
                                         <button
@@ -98,7 +98,7 @@ const Table = ({ columns, apiEndpoint, itemPath, deleteItem, actions }) => {
                     ))}
                 </tbody>
             </table>
-            <Link to={`${itemPath}/new`}>
+            <Link to={`${itemPath}/add`}>
                 <button
                     className={`mx-10 text-base my-5 rounded-xl bg-green-900 px-4 py-1 text-white`}
                 >

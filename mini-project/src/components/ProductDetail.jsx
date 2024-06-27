@@ -23,12 +23,12 @@ const ProductDetail = () => {
                 {product.map((product) => (
                     <div className="flex justify-between">
                         <div>
-                            <div className="flex space-x-20">
-                                <div className="flex-col space-y-5">
+                            <div className="flex ">
+                                <div className="flex-col space-y-5 w-80">
                                     <p className="font-bold text-left text-[16px]">
                                         ID Produk
                                     </p>
-                                    <p className="font-bold text-left text-[16px]">
+                                    <p className="font-bold text-left text-[16px] ">
                                         Nama Produk
                                     </p>
                                     <p className="font-bold text-left text-[16px]">
@@ -66,7 +66,7 @@ const ProductDetail = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className=" w-1/2 bg-slate-400">
+                        <div className=" w-1/2 ">
                             <img src={product.image} alt="" className="" />
                         </div>
                     </div>

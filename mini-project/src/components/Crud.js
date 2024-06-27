@@ -17,7 +17,7 @@ export const getProductById = async (id) => {
     return response.data;
 };
 export const getCategories = async () => {
-    const response = await api.get("/getAll");
+    const response = await api.get("/categories");
     return response.data;
 };
 export const addProduct = async (product) => {
@@ -29,27 +29,18 @@ export const addProduct = async (product) => {
     return response.data;
 };
 
-// export const updateProduct = async (id, product) =>{
-//     const response = await api.put(`/updateproduct/${id}`, product,{
-//          headers: {
-//                  'Content-Type' : 'application/json'}});
-//     return response.data;
-// }
-export const updateProduct = async (id, product) => {
-    const response = await fetch(`localhost:8080/pos/api/updateproduct/${id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(product),
-    });
-    if (!response.ok) {
-        throw new Error("Failed to update product");
-    }
-    return await response.json();
-};
+export const updateProduct = async (id, product) =>{
+    const response = await api.put(`/updateproduct/${id}`, product,{
+         headers: {
+                 'Content-Type' : 'application/json'}});
+    return response.data;
+}
 
 export const deleteProduct = async (id) => {
-    const response = await api.delete(`deleteproduct/${id}`);
-    return response.data;
+    const response = await api.delete(`deleteproduct/${id}`,{
+        headers: {
+                'Content-Type' : 'application/json'}});
+   return response.data;
+// );
+//     return response.data;
 };

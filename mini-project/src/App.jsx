@@ -10,6 +10,7 @@ import CategoryCrud from "./page/CategoryCrud";
 import TransactionDetail from "./components/TransactionDetail";
 import ProductForm from "./components/ProductForm";
 import ProductDetail from "./components/ProductDetail";
+import CategoryDetail from "./components/CategoryDetail";
 
 function App() {
     // const [count, setCount] = useState(0)
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/product/add" element={<ProductForm />} />
                     <Route path="/product/edit/:id" element={<ProductForm />} />
                     <Route path="/product/detail/:id" element={<ProductDetail />} />
+                    <Route path="/category/detail/:id" element={<CategoryDetail />} />
                     
 
                 </Routes>

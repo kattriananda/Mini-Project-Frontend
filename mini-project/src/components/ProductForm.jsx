@@ -37,7 +37,9 @@ const ProductForm = () => {
         if (id) {
             getProductById(id).then((product) => {
                  console.log(product)
-                reset(...product)
+                reset({...product,
+                    categoryId: product.category.id} 
+                )
             })
         }
     },[id])
