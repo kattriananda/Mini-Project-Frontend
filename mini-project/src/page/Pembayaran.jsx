@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { clearCart } from "../store/cartSlice";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const Pembayaran = () => {
     const items = useSelector((state) => state.cart.items);
@@ -12,10 +14,25 @@ const Pembayaran = () => {
     const navigate = useNavigate();
 
     const [payment, setPayment] = useState(0);
-    const [showPopup, setPopup] = useState(false);
 
     const handlePayment = (e) => {
         setPayment(Number(e.target.value));
+    };
+
+    const handleShowPopup = () => {
+        withReactContent(Swal).fire({
+            title: "Pembayaran Sukses!",
+            text: "Anda akan diarahkan kembali ke halaman daftar produk.",
+            icon: "success",
+            timer: 3000,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+                navigate("/listproduct");
+            }
+        });
     };
 
     const handleTransaction = async () => {
@@ -35,9 +52,11 @@ const Pembayaran = () => {
             transactionDetails,
         };
         try {
-            await axios.post("http://localhost:8080/pos/api/addtransaction", data);
-
-            setPopup(true);
+            await axios.post(
+                "http://localhost:8080/pos/api/addtransaction",
+                data
+            );
+            handleShowPopup();
             dispatch(clearCart());
             setTimeout(() => {
                 setPopup(false);
@@ -75,7 +94,10 @@ const Pembayaran = () => {
                                     </div>
                                     <div>X {item.quantity}</div>
                                     <div className="font-semibold text-right">
-                                        Rp. {(item.quantity * item.price).toLocaleString()}
+                                        Rp.{" "}
+                                        {(
+                                            item.quantity * item.price
+                                        ).toLocaleString()}
                                     </div>
                                 </div>
                             </div>
@@ -116,23 +138,6 @@ const Pembayaran = () => {
                     </div>
                     {/* </div> */}
                 </div>
-                 {showPopup && (
-                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-                    <div className="bg-white p-6 rounded shadow-lg">
-                        <p className="text-xl font-semibold mb-4">Pembayaran Sukses!</p>
-                        <p className="mb-4">Anda akan diarahkan kembali ke halaman daftar produk.</p>
-                        <button 
-                            className="w-full rounded-lg border py-2 bg-green-950 text-white"
-                            onClick={() => {
-                                setPopup(false);
-                                navigate('/listproduct'); // Sesuaikan path sesuai dengan rute daftar produk Anda
-                            }}
-                        >
-                            OK
-                        </button>
-                    </div>
-                </div>
-            )}
             </div>
         </>
     );

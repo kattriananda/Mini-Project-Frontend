@@ -1,4 +1,4 @@
-import { deleteProduct } from "../components/Crud"
+import { deleteCategory} from "../components/Crud"
 import TableReactMaterial from "../components/TableReacMaterial"
 import Sidebar from "../layout/Sidebar"
 
@@ -17,7 +17,7 @@ const TableCategory = ()=>{
                 columns={categoryColumns}
                 apiEndpoint="http://localhost:8080/pos/api/categories"
                 itemPath="/category"
-                deleteItem={deleteProduct}
+                deleteItem={deleteCategory}
                 actions={["detail", "edit", "delete"]}
                 showAddButton={true}
             />

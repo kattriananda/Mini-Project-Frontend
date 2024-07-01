@@ -110,13 +110,13 @@ const ListProduct = () => {
                     </div>
                 </div>
             </header>
-            <div className=" fixed left-24 h-14 content-center top-[86px] bg-white z-20">
-                <div className="flex space-x-4 w-[50rem] ">
+            <div className=" fixed left-24 h-auto content-center top-[88px] py-2 bg-white z-20">
+                <div className="grid grid-cols-4 gap-y-2  w-[50rem] ">
                     {categories &&
                         categories.map((category) => (
                             <button
                                 key={category.id}
-                                className={` w-[100px] border rounded-full px-4 py-1 ${
+                                className={` w-[160px] border rounded-full px-4 py-1 ${
                                     selectedCategory === category.id
                                         ? "bg-gray-200"
                                         : ""

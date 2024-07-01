@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { addProduct, getCategories, getProductById, updateProduct } from "./Crud";
+import {
+    addProduct,
+    getCategories,
+    getProductById,
+    updateProduct,
+} from "./Crud";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useSWR, { mutate } from "swr";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const ValidationShema = Yup.object().shape({
     title: Yup.string().required("Name is Required"),
@@ -12,14 +19,13 @@ const ValidationShema = Yup.object().shape({
         .required("Price is Required")
         .positive("Price must be positive"),
     image: Yup.string().required("Image is required"),
-    categoryId:Yup.number().required("Category is required")
+    categoryId: Yup.number().required("Category is required"),
 });
-
 
 const getCategory = () => getCategories();
 
 const ProductForm = () => {
-    const {id}= useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const { data: categories, error: categoryError } = useSWR(
@@ -30,44 +36,60 @@ const ProductForm = () => {
         register,
         handleSubmit,
         formState: { errors },
-        reset
+        reset,
     } = useForm({ resolver: yupResolver(ValidationShema) });
 
-    useEffect(()=>{
+    useEffect(() => {
         if (id) {
             getProductById(id).then((product) => {
-                 console.log(product)
-                reset({...product,
-                    categoryId: product.category.id} 
-                )
-            })
+                console.log(product);
+                reset({ ...product, categoryId: product.category.id });
+            });
         }
-    },[id])
-    
+    }, [id]);
+
+    const handlePopUpSukses = () => {
+        const title = id
+            ? "Produk Berhasil di Update"
+            : "Produk Berhasil di Tambahkan";
+        withReactContent(Swal)
+            .fire({
+                title,
+                icon: "success",
+                timer: 3000,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            })
+            .then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    navigate("/product");
+                }
+            });
+    };
+
     const onSubmit = async (data) => {
         data.price = Number(data.price);
         data.categoryId = Number(data.categoryId);
-        console.log("Data:", data);
+        // console.log("Data:", data);
         try {
-            if (id){
+            if (id) {
                 await updateProduct(id, data);
-            } else{
-                await addProduct(data)
+            } else {
+                await addProduct(data);
             }
-            mutate();
-            navigate('/product')
-        }catch (error) {
-            console.error("Error submitting form : ", error)
+            handlePopUpSukses();
+        } catch (error) {
+            console.error("Error submitting form : ", error);
         }
-        //  console.log("Form Data:", data); 
+        //  console.log("Form Data:", data);
     };
-    if (categoryError ) return <div>Failed to load data</div>;
+    if (categoryError) return <div>Failed to load data</div>;
     if (!categories) return <div>Loading...</div>;
 
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            
             className="max-w-md mx-auto mt-14 p-5 border rounded shadow"
         >
             <div className="mb-4">
@@ -111,18 +133,18 @@ const ProductForm = () => {
             </div>
             <div className="mb-4">
                 <label htmlFor="">Category</label>
-                        <select
-                            {...register('categoryId')}
-                            className="w-full px-3 py-2 border rounded"
-                        >
-                            <option value="">Select Category</option>
-                            {categories.map((category) => (
-                                <option key={category.id} value={category.id}>
-                                    {category.name}
-                                </option>
-                            ))}
-                        </select>
-                    
+                <select
+                    {...register("categoryId")}
+                    className="w-full px-3 py-2 border rounded"
+                >
+                    <option value="">Select Category</option>
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                            {category.name}
+                        </option>
+                    ))}
+                </select>
+
                 {errors.categoryId && (
                     <p className="text-red-500 text-sm">
                         {errors.categoryId.message}
@@ -130,12 +152,21 @@ const ProductForm = () => {
                 )}
             </div>
             <div className="flex space-x-2 justify-between">
-            <button type="submit" className="border px-2 py-1 rounded-lg bg-slate-200 hover:bg-green-950 hover:text-white">{id ? "Update product" : "Add Product"}</button>
-            <button onClick={()=> navigate("/product")} className="border px-4 py-1 rounded-lg bg-slate-200 hover:bg-red-600 hover:text-white">Cancel</button>
+                <button
+                    type="submit"
+                    className="border px-2 py-1 rounded-lg bg-slate-200 hover:bg-green-950 hover:text-white"
+                >
+                    {id ? "Update product" : "Add Product"}
+                </button>
+                <button
+                    onClick={() => navigate("/product")}
+                    className="border px-4 py-1 rounded-lg bg-slate-200 hover:bg-red-600 hover:text-white"
+                >
+                    Cancel
+                </button>
             </div>
-            
         </form>
     );
 };
 
-export default ProductForm
+export default ProductForm;

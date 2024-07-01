@@ -3,7 +3,12 @@ import axios from "axios";
 const api = axios.create({
     baseURL: "http://localhost:8080/pos/api",
 });
-export const getProduct = async (search = "", categoryId = "", sortOrder= "", sortBy ="") => {
+export const getProduct = async (
+    search = "",
+    categoryId = "",
+    sortOrder = "",
+    sortBy = ""
+) => {
     let url = "/listproduct";
     const params = [];
     if (search) params.push(`title=${search}`);
@@ -36,28 +41,36 @@ export const addProduct = async (product) => {
     return response.data;
 };
 export const addCatogory = async (category) => {
-    const response = await api.post("/addcategory", category,{
-        headers:{
-            "Content-type" : "application/json",
-        }
-    }
-)
-}
-
-export const updateProduct = async (id, product) =>{
-    const response = await api.put(`/updateproduct/${id}`, product,{
-         headers: {
-                 'Content-Type' : 'application/json'}});
-    return response.data;
-}
-
-export const deleteProduct = async (id) => {
-    const response = await api.delete(`deleteproduct/${id}`,{
+    const response = await api.post("/addcategory", category, {
         headers: {
-                'Content-Type' : 'application/json'}});
-   return response.data;
+            "Content-type": "application/json",
+        },
+    });
 };
 
-// export const deleteCategory = async (id) => {
-//     const response = await api.delete('categoriesDel')
-// }
+export const updateProduct = async (id, product) => {
+    const response = await api.put(`/updateproduct/${id}`, product, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    return response.data;
+};
+
+export const deleteProduct = async (id) => {
+    const response = await api.delete(`deleteproduct/${id}`, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    return response.data;
+};
+
+export const deleteCategory = async (id) => {
+    const response = await api.delete(`deletecategory/${id}`, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    return response.data;
+};
