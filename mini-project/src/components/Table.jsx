@@ -15,7 +15,6 @@ const Table = ({ columns, apiEndpoint, itemPath, deleteItem, actions }) => {
     const handleDelete = async (id) => {
         try {
             const response = await deleteItem(id);
-            // const data = await response.json();
             if (response.canDelete) {
                 mutate();
             } else {

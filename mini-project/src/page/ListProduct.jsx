@@ -7,13 +7,17 @@ import useSWR from "swr";
 import Cart from "../components/Cart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { Box, CircularProgress } from "@mui/material";
 
 const ListProduct = () => {
     const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [sortOrder, setSortOrder] = useState("");
+    const [sortBy, setSortBy] = useState("");
+    const [showFilter, setShowFilter] = useState(false);
 
     const product = async () => {
-        const res = await getProduct(search, selectedCategory);
+        const res = await getProduct(search, selectedCategory, sortOrder, sortBy);
         return res;
     };
     const category = async () => {
@@ -23,7 +27,7 @@ const ListProduct = () => {
 
     const { data: products, error: productError } = useSWR(
         search || selectedCategory
-            ? ["/listproduct", search, selectedCategory]
+            ? ["/listproduct", search, selectedCategory, sortOrder, sortBy]
             : "/listproduct",
         product
     );
@@ -31,6 +35,14 @@ const ListProduct = () => {
         "/getAll",
         category
     );
+
+    if (!product||!categories)
+        return (
+            <Box display="flex" justifyContent="center">
+                <CircularProgress />
+            </Box>
+        );
+    
 
     //  console.log(products);
     //  console.log(categories);
@@ -42,6 +54,18 @@ const ListProduct = () => {
         // console.log(selectedCategory);
     };
 
+    const handleSortOrder = (order, by)=>{
+        setSortBy(by)
+        setSortOrder(order);
+        setShowFilter(false);
+    }
+    const handleSortBy = (order,by)=>{
+        setSortBy(by);
+        setSortOrder(order)
+        setShowFilter(false);
+    }
+    
+
     return (
         <div>
             <Sidebar />
@@ -51,7 +75,7 @@ const ListProduct = () => {
                 search={search}
                 onSearchChange={setSearch}
             /> */}
-            <header className="fixed w-[50rem] top-0 overflow-hidden ml-14 pt-4 bg-white z-50">
+            <header className="fixed w-[50rem] top-0 overflow-hidden ml-14 pt-4 bg-white z-30">
                 <div className="flex justify-between">
                     <div className="">
                         <h1 className="text-left font-bold text-[32px]">
@@ -72,20 +96,27 @@ const ListProduct = () => {
                             />
                         </div>
                         <div className="filter text-lg">
-                            <button>
+                            <button onClick={()=>setShowFilter(!showFilter)}>
                                 <FontAwesomeIcon icon={faFilter} />
                             </button>
+                            {showFilter && (
+                                <div className="relative top-18 right-0 w-48 bg-white border rounded-lg shadow-lg">
+                                    <button onClick={()=> handleSortOrder("asc","price")}>Harga Terendah</button>
+                                    <button onClick={()=> handleSortOrder("desc", "price")}>Harga Tertinggi</button>
+                                    <button onClick={()=> handleSortBy("asc","title")}>Berdasarkan nama</button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
             </header>
-            <div className=" fixed left-24 h-14 content-center top-[86px] z-40 bg-white">
+            <div className=" fixed left-24 h-14 content-center top-[86px] bg-white z-20">
                 <div className="flex space-x-4 w-[50rem] ">
                     {categories &&
                         categories.map((category) => (
                             <button
                                 key={category.id}
-                                className={`border rounded-full px-4 py-1 ${
+                                className={` w-[100px] border rounded-full px-4 py-1 ${
                                     selectedCategory === category.id
                                         ? "bg-gray-200"
                                         : ""

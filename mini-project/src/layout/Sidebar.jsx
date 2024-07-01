@@ -1,16 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faAngry,
-    faBarChart,
-    faBookmark,
-    faHandshake,
-} from "@fortawesome/free-regular-svg-icons";
-import {
+    faBoxesStacked,
+    faClipboardList,
+    faClockRotateLeft,
     faGear,
     faHouse,
-    faListSquares,
     faRightFromBracket,
+    faTableList,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
@@ -33,29 +30,31 @@ const Sidebar = () => {
                 </div>
                 <div>
                     <Link to="/listproduct">
-                    <button>
-                        <FontAwesomeIcon icon={faListSquares} />
-                    </button>
+                        <button>
+                            <FontAwesomeIcon icon={faClipboardList} />
+                        </button>
                     </Link>
-                    
                 </div>
                 <div>
-                    <button>
-                        <FontAwesomeIcon icon={faBookmark} />
-                    </button>
+                    <Link to="/transaksi">
+                        <button>
+                            <FontAwesomeIcon icon={faClockRotateLeft} />
+                        </button>
+                    </Link>
                 </div>
                 <div>
-                   
-                    <button>
-                        <FontAwesomeIcon icon={faHandshake} />
-                    </button>
-                  
-                    
+                    <Link to="/product">
+                        <button>
+                            <FontAwesomeIcon icon={faBoxesStacked} />
+                        </button>
+                    </Link>
                 </div>
                 <div>
-                    <button>
-                        <FontAwesomeIcon icon={faBarChart} />
-                    </button>
+                    <Link to="/category">
+                        <button>
+                            <FontAwesomeIcon icon={faTableList} />
+                        </button>
+                    </Link>
                 </div>
             </div>
             <div className="setting flex-col h-1/5 space-y-6 ">

@@ -8,7 +8,7 @@ const CategoryDetail = () => {
     const { id } = useParams();
     const fetcher = (url) => fetch (url).then((res) => res.json());
     const { data: category, error } = useSWR(
-        `http://localhost:8080/pos/api/detailCategory/${id}`,
+        `http://localhost:8080/pos/api/categories/${id}`,
         fetcher
     );
     console.log(category)
@@ -21,7 +21,7 @@ const CategoryDetail = () => {
             <Header title="Detail Kategory" />
             <div className="ml-20 mt-28">
                 {category.map((category) => (
-                    <div className="flex space-x-20">
+                    <div key={category.id} className="flex space-x-20">
                         <div className="font-bold text-left text-[16px] flex-col space-y-8">
                             <p>ID Kategori</p>
                             <p>Nama Kategori</p>

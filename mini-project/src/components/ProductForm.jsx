@@ -54,7 +54,7 @@ const ProductForm = () => {
             } else{
                 await addProduct(data)
             }
-            mutate('getAll');
+            mutate();
             navigate('/product')
         }catch (error) {
             console.error("Error submitting form : ", error)
@@ -129,8 +129,11 @@ const ProductForm = () => {
                     </p>
                 )}
             </div>
-            <button type="submit">{id ? "update product" : "add Product"}</button>
-            <button onClick={()=> navigate("/product")}>Cancel</button>
+            <div className="flex space-x-2 justify-between">
+            <button type="submit" className="border px-2 py-1 rounded-lg bg-slate-200 hover:bg-green-950 hover:text-white">{id ? "Update product" : "Add Product"}</button>
+            <button onClick={()=> navigate("/product")} className="border px-4 py-1 rounded-lg bg-slate-200 hover:bg-red-600 hover:text-white">Cancel</button>
+            </div>
+            
         </form>
     );
 };

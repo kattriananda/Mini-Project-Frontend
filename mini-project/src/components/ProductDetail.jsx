@@ -19,58 +19,46 @@ const ProductDetail = () => {
         <>
             <Sidebar />
             <Header title="Detail Product" />
-            <div className="ml-20 mt-28 mr-6">
-                {product.map((product) => (
-                    <div className="flex justify-between">
-                        <div>
-                            <div className="flex ">
-                                <div className="flex-col space-y-5 w-80">
-                                    <p className="font-bold text-left text-[16px]">
-                                        ID Produk
-                                    </p>
-                                    <p className="font-bold text-left text-[16px] ">
-                                        Nama Produk
-                                    </p>
-                                    <p className="font-bold text-left text-[16px]">
-                                        Harga Produk
-                                    </p>
-                                    <p className="font-bold text-left text-[16px]">
-                                        URL Produk
-                                    </p>
-                                    <p className="font-bold text-left text-[16px]">
-                                        ID Kategori
-                                    </p>
-                                    <p className="font-bold text-left text-[16px]">
-                                        Nama Kategori
+            <div className="ml-20 mt-28 mr-6 ">
+                {/* {product.map((product) => ( */}
+                <div className="flex justify-between">
+                    <div className="w-[50rem]">
+                        <div className="flex w-1/2">
+                            <div className="flex-col space-y-5 w-80 text-[16px] text-left">
+                                <div className="flex w-[45rem]">
+                                    <p className="font-bold w-[20rem]">ID Produk</p>
+                                    <p className="">: {product.id}</p>
+                                </div>
+                                <div className="flex w-[45rem]">
+                                    <p className="font-bold w-[20rem]">Nama Produk</p>
+                                    <p className="">: {product.title}</p>
+                                </div>
+                                <div className="flex w-[45rem]">
+                                    <p className="font-bold w-[20rem]">Harga Produk</p>
+                                    <p className="">
+                                        : {product.price.toLocaleString()}
                                     </p>
                                 </div>
-                                <div className="flex-col space-y-5">
-                                    <p className="text-left text-[16px]">
-                                        : {product.id}
-                                    </p>
-                                    <p className="text-left text-[16px]">
-                                        : {product.title}
-                                    </p>
-                                    <p className="text-left text-[16px]">
-                                        : Rp. {product.price.toLocaleString()}
-                                    </p>
-                                    <p className="text-left text-[16px]">
-                                        : {product.image}
-                                    </p>
-                                    <p className="text-left text-[16px]">
-                                        : {product.category.id}
-                                    </p>
-                                    <p className="text-left text-[16px]">
-                                        : {product.category.name}
-                                    </p>
+                                <div className="flex w-[45rem] ">
+                                    <p className="font-bold w-[20rem]  ">URL Produk</p>
+                                    <p className="w-[20rem] text-wrap">: {product.image}</p>
+                                </div>
+                                <div className="flex w-[45rem]">
+                                    <p className="font-bold w-[20rem]">ID Kategori</p>
+                                    <p className="">: {product.category.id}</p>
+                                </div>
+                                <div className="flex w-[45rem]">
+                                    <p className="font-bold w-[20rem]">ID Kategori</p>
+                                    <p className="">: {product.category.name}</p>
                                 </div>
                             </div>
                         </div>
-                        <div className=" w-1/2 ">
-                            <img src={product.image} alt="" className="" />
-                        </div>
                     </div>
-                ))}
+                    <div className=" w-1/2 ">
+                        <img src={product.image} alt="" className="" />
+                    </div>
+                </div>
+                {/* ))} */}
 
                 {/* )} */}
             </div>
