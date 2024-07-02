@@ -25,24 +25,28 @@ const ListProduct = () => {
         return res;
     };
 
-    const { data: products, error: productError } = useSWR(
+    const { data: products, error: productError, mutate: mutateProducts } = useSWR(
         search || selectedCategory
             ? ["/listproduct", search, selectedCategory, sortOrder, sortBy]
             : "/listproduct",
         product
     );
+    
     const { data: categories, error: categoryError } = useSWR(
         "/getAll",
         category
     );
+
+     useEffect(()=>{
+        mutateProducts()
+    },[search, selectedCategory, sortBy, sortOrder])
 
     if (!product||!categories)
         return (
             <Box display="flex" justifyContent="center">
                 <CircularProgress />
             </Box>
-        );
-    
+        );    
 
     //  console.log(products);
     //  console.log(categories);
@@ -54,17 +58,11 @@ const ListProduct = () => {
         // console.log(selectedCategory);
     };
 
-    const handleSortOrder = (order, by)=>{
+    const handleSort = (order, by)=>{
         setSortBy(by)
         setSortOrder(order);
         setShowFilter(false);
     }
-    const handleSortBy = (order,by)=>{
-        setSortBy(by);
-        setSortOrder(order)
-        setShowFilter(false);
-    }
-    
 
     return (
         <div>
@@ -97,13 +95,13 @@ const ListProduct = () => {
                         </div>
                         <div className="filter text-lg">
                             <button onClick={()=>setShowFilter(!showFilter)}>
-                                <FontAwesomeIcon icon={faFilter} />
+                                <FontAwesomeIcon icon={faFilter} className={`${showFilter ? "-translate-x-20 relative top-4" : ""}`} />
                             </button>
-                            {showFilter && (
-                                <div className="relative top-18 right-0 w-48 bg-white border rounded-lg shadow-lg">
-                                    <button onClick={()=> handleSortOrder("asc","price")}>Harga Terendah</button>
-                                    <button onClick={()=> handleSortOrder("desc", "price")}>Harga Tertinggi</button>
-                                    <button onClick={()=> handleSortBy("asc","title")}>Berdasarkan nama</button>
+                             {showFilter && (
+                                <div className="relative  z-50 right-0 w-46 bg-white border rounded-lg shadow-lg text-left px-4 text-[12px]">
+                                    <button onClick={()=> handleSort("asc","price")} className={`block w-full text-left ${sortBy === "price" && sortOrder === "asc" ? "font-bold" : ""}  py-1`}>Harga Terendah</button>
+                                    <button onClick={()=> handleSort("desc", "price")} className={`block w-full text-left ${sortBy === "price" && sortOrder === "desc" ? "font-bold" : ""}  py-1`}>Harga Tertinggi</button>
+                                    <button onClick={()=> handleSort("asc","title")} className={`block w-full text-left ${sortBy === "title" && sortOrder === "asc" ? "font-bold" : ""}  py-1`}>Berdasarkan nama</button>
                                 </div>
                             )}
                         </div>
@@ -142,7 +140,9 @@ const ListProduct = () => {
                         <p>Product not found</p>
                     )
                 ) : (
-                    <p>Loading ... </p>
+                    <p>
+                        <CircularProgress /> 
+                    </p>
                 )}
             </div>
             <Cart />
