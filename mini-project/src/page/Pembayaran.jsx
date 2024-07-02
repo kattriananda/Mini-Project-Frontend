@@ -24,7 +24,7 @@ const Pembayaran = () => {
             title: "Pembayaran Sukses!",
             text: "Anda akan diarahkan kembali ke halaman daftar produk.",
             icon: "success",
-            timer: 3000,
+            timer: 1500,
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
@@ -58,10 +58,10 @@ const Pembayaran = () => {
             );
             handleShowPopup();
             dispatch(clearCart());
-            setTimeout(() => {
-                setPopup(false);
-                navigate("/listproduct");
-            }, 3000);
+            // setTimeout(() => {
+            //     setPopup(false);
+            //     navigate("/listproduct");
+            // }, 3000);
         } catch (error) {
             console.error("Gagal mengirim data ke api", error);
         }
