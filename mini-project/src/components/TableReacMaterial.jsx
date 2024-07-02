@@ -25,9 +25,12 @@ const TableReactMaterial = ({
     const navigate = useNavigate();
 
     const handlePopUpError = () => {
+         const title = itemPath === '/product'
+            ? "Produk Tidak Dapat di Hapus"
+            : itemPath === '/category'? "Kategori Tidak Dapat di Hapus":"";
         withReactContent(Swal)
             .fire({
-                title: "Produk Tidak Dapat di Hapus",
+                title,
                 icon: "error",
                 timer: 1500,
                 showConfirmButton: false,
@@ -36,7 +39,7 @@ const TableReactMaterial = ({
             })
             .then((result) => {
                 if (result.dismiss === Swal.DismissReason.timer) {
-                    navigate("/product");
+                   navigate(`${itemPath}`);
                 }
             });
     };
@@ -53,6 +56,9 @@ const TableReactMaterial = ({
     };
 
     const handlePopUpDelete = () => {
+      const title = itemPath === '/product'
+            ? "Produk Berhasil di Hapus"
+            : itemPath === '/category'? "Kategori Berhasil di Hapus":"";
         withReactContent(Swal)
             .fire({
                 title: "Kamu Yakin?",
