@@ -14,7 +14,6 @@ import TableCategory from "./page/TableCategory";
 import CategoryForm from "./components/CategoryForm";
 
 function App() {
-    // const [count, setCount] = useState(0)
 
     return (
         <>
@@ -23,7 +22,6 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/listproduct" element={<ListProduct />} />
                     <Route path="/checkout" element={<Pembayaran />} />
-                    {/* <Route path="/product" element={<ProductCrud />} /> */}
                     <Route path="/transaksi" element={<Transaksi />} />
                     <Route path="transaksi/detail/:transactionId" element={<TransactionDetail />} />
                     <Route path="/category" element={<TableCategory />} />
@@ -37,8 +35,6 @@ function App() {
 
                 </Routes>
             </Router>
-            {/* <Home/> */}
-            {/* <Pembayaran/> */}
         </>
     );
 }
