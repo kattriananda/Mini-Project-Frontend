@@ -67,12 +67,6 @@ const ListProduct = () => {
     return (
         <div>
             <Sidebar />
-            {/* <Header
-                title="Welcome!!"
-                desc=
-                search={search}
-                onSearchChange={setSearch}
-            /> */}
             <header className="fixed w-[50rem] top-0 overflow-hidden ml-14 pt-4 bg-white z-30">
                 <div className="flex justify-between">
                     <div className="">
@@ -126,7 +120,7 @@ const ListProduct = () => {
                         ))}
                 </div>
             </div>
-            {/* </div> */}
+    
 
             <div
                 className={`ml-14 mt-32 grid grid-cols-4 w-[50rem] gap-2 overflow-hidden`}
